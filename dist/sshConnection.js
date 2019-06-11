@@ -93,11 +93,6 @@ class SSHConnection extends events_1.EventEmitter {
                 this.sshConnection.exec(cmd, options, (err, stream) => {
                     if (err)
                         return reject(err);
-                    stream.on('close', function () {
-                        console.log(`Closed stream - ${cmd}`);
-                    }).on('finish', function () {
-                        console.log(`Closed stream - ${cmd}`);
-                    });
                     stream.kill = function () {
                         sshUtils_1.default.endSocket(stream);
                     };
@@ -223,7 +218,7 @@ class SSHConnection extends events_1.EventEmitter {
                     this.__x11.reject("X Server not running locally.");
                     this.emit(sshConstants_1.default.CHANNEL.X11, sshConstants_1.default.STATUS.DISCONNECT, { err: err, msg: "X Server not running locally." });
                 });
-                // connects to localhost:0.0 
+                // connects to localhost:0.0
                 xserversock.connect(6000, 'localhost');
             }).on('error', (err) => {
                 this.emit(sshConstants_1.default.CHANNEL.SSH, sshConstants_1.default.STATUS.DISCONNECT, { err: err });

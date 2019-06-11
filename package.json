@@ -4,10 +4,12 @@
   "description": "Promise wrapper around SSH2 library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "licenses": [{
-    "type": "MIT",
-    "url": "https://www.opensource.org/licenses/mit-license.php"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/sanketbajoria/ssh2-promise"
