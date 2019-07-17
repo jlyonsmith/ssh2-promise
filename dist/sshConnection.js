@@ -112,13 +112,14 @@ class SSHConnection extends events_1.EventEmitter {
                 this.sshConnection.exec(cmd, options, (err, stream) => {
                     if (err)
                         return reject(err);
-                    var buffer = "";
+                    var stdout = "";
+                    var stderr = "";
                     stream.on('close', function () {
-                        resolve(buffer);
+                        resolve({ stdout, stderr });
                     }).on('data', function (data) {
-                        buffer += data;
+                        stdout += data;
                     }).stderr.on('data', function (data) {
-                        reject(data);
+                        stderr += data;
                     });
                 });
             });
