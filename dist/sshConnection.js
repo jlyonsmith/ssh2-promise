@@ -180,7 +180,7 @@ class SSHConnection extends events_1.EventEmitter {
                 this.__$connectPromise = null;
                 return;
             }
-            if (this.config.tryKeyboard && !this.config.password && typeof this.config !== 'undefined') {
+            if (!this.config.password && typeof this.config !== 'undefined') {
                 delete this.config.password;
             }
             if (this.config.identity) {
@@ -191,12 +191,13 @@ class SSHConnection extends events_1.EventEmitter {
             }
             //Start ssh server connection
             this.sshConnection = new SSH2();
-            this.sshConnection.on('keyboard-interactive', (name, instructions, lang, prompts, finish) => {
-                const tryKeyboard = this.config.tryKeyboard;
-                if (tryKeyboard) {
-                    tryKeyboard(name, instructions, lang, prompts).then((responses) => (finish(responses))).catch(() => (finish()));
-                }
-            }).on('ready', (err) => {
+            if (this.config.showPrompts) {
+                this.config.tryKeyboard = true;
+                this.sshConnection.on('keyboard-interactive', (name, instructions, lang, prompts, finish) => {
+                    this.config.showPrompts(name, instructions, lang, prompts).then((responses) => (finish(responses))).catch(() => (finish()));
+                });
+            }
+            this.sshConnection.on('ready', (err) => {
                 if (err) {
                     this.emit(sshConstants_1.default.CHANNEL.SSH, sshConstants_1.default.STATUS.DISCONNECT, { err: err });
                     this.__$connectPromise = null;
