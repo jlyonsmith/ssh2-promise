@@ -139,13 +139,14 @@ export default class SSHConnection extends EventEmitter {
                 this.sshConnection.exec(cmd, options, (err:any, stream:any) => {
                     if (err)
                         return reject(err);
-                    var buffer = "";
+                    var stdout = "";
+                    var stderr = "";
                     stream.on('close', function () {
-                        resolve(buffer);
+                        resolve({stdout, stderr});
                     }).on('data', function (data:any) {
-                        buffer += data;
+                        stdout += data;
                     }).stderr.on('data', function (data:any) {
-                        reject(data);
+                        stderr += data;
                     });
                 })
             })
