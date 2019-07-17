@@ -192,11 +192,10 @@ class SSHConnection extends events_1.EventEmitter {
             //Start ssh server connection
             this.sshConnection = new SSH2();
             this.sshConnection.on('keyboard-interactive', (name, instructions, lang, prompts, finish) => {
-                prompts.forEach((prompt) => {
-                    sshUtils_1.default.prompt(prompt.prompt, (password) => {
-                        finish([password]);
-                    });
-                });
+                const tryKeyboard = this.config.tryKeyboard;
+                if (tryKeyboard) {
+                    tryKeyboard(name, instructions, lang, prompts).then((responses) => (finish(responses))).catch(() => (finish()));
+                }
             }).on('ready', (err) => {
                 if (err) {
                     this.emit(sshConstants_1.default.CHANNEL.SSH, sshConstants_1.default.STATUS.DISCONNECT, { err: err });

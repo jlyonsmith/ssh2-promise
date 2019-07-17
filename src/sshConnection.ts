@@ -228,11 +228,11 @@ export default class SSHConnection extends EventEmitter {
             //Start ssh server connection
             this.sshConnection = new SSH2();
             this.sshConnection.on('keyboard-interactive', (name:any, instructions:any, lang:any, prompts:Array<any>, finish:Function) => {
-                prompts.forEach((prompt) => {
-                    SSHUtils.prompt(prompt.prompt, (password:string) => {
-                        finish([password]);
-                    })
-                });
+                const tryKeyboard = this.config.tryKeyboard
+
+                if (tryKeyboard) {
+                    tryKeyboard(name, instructions, lang, prompts).then((responses:any) => (finish(responses))).catch(()=>(finish()));
+                }
             }).on('ready', (err:any) => {
                 if (err) {
                     this.emit(SSHConstants.CHANNEL.SSH, SSHConstants.STATUS.DISCONNECT, { err: err });
