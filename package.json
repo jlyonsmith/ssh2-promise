@@ -1,6 +1,6 @@
 {
-  "name": "ssh2-promise",
-  "version": "0.1.5",
+  "name": "@johnls/ssh2-promise",
+  "version": "1.0.0",
   "description": "Promise wrapper around SSH2 library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "ts-node node_modules/jasmine/bin/jasmine"
+    "test": "",
+    "deploy": "npm publish --access public"
   },
   "keywords": [
     "ssh2",

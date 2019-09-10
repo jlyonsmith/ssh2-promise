@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import * as stream from "stream";
 import { EventEmitter } from 'events';
 import { InputAttributes, Stats, ReadStreamOptions, WriteStreamOptions, TransferOptions } from 'ssh2-streams';

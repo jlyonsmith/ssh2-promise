@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { EventEmitter } from 'events';
 import SSH2Promise = require('./index');
 import { TunnelConfig } from './TunnelConfig';

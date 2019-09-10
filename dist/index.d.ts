@@ -12,7 +12,7 @@ declare class SSH2Promise extends BaseSSH2Promise {
         endSocket: (socket: any) => void;
         prompt: (question: string, cb: Function) => void;
         createDeferredPromise: () => {
-            promise: Promise<{}>;
+            promise: Promise<unknown>;
             resolve: undefined;
             reject: undefined;
         };

@@ -16,7 +16,7 @@ declare const _default: {
      * Create a Deferred promise
      */
     createDeferredPromise: () => {
-        promise: Promise<{}>;
+        promise: Promise<unknown>;
         resolve: undefined;
         reject: undefined;
     };
